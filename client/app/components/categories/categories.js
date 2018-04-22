@@ -17,36 +17,18 @@ class CategoriesController {
 
   $onInit() {
     this.store.subscribe(() => {
-      this.categories = this.store.getState();
+      this.categories = this.store.getState().categories;
+      this.currentCategory = this.store.getState().category;
     });
     this.store.dispatch(
       this.CategoriesActions.getCategories()
     );
-
-    this.$timeout(() => {
-      const categories = [
-        { id: 0, name: 'Redux' },
-        { id: 1, name: 'Angular' }
-      ];
-
-      this.store.dispatch(
-        this.CategoriesActions.getCategories(categories)
-      );
-    }, 3000);
-
-    this.$timeout(() => {
-      const categories = [
-        { id: 0, name: 'Un Oh!' }
-      ];
-
-      this.store.dispatch(
-        this.CategoriesActions.getCategories(categories)
-      );
-    }, 6000);
   }
 
-  onCategorySelected(currentCategory) {
-    this.currentCategory = category(this.currentCategory, this.CategoriesActions.selectCategory(currentCategory));
+  onCategorySelected(category) {
+    this.store.dispatch(
+      this.CategoriesActions.selectCategory(category)
+    )
   }
 
   isCurrentCategory(category) {
